@@ -1107,6 +1107,10 @@ h1,
   padding-top: 0.5rem;
 }
 
+.pt-20{
+  padding-top: 5rem;
+}
+
 .text-left{
   text-align: left;
 }
@@ -1246,7 +1250,7 @@ h1,
   height: 160px;
 }
 
-.paragraph--type--section{
+.paragraph--type--channels{
   overflow: hidden;
 }
 
