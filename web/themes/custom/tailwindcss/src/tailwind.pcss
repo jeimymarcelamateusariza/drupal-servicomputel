@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-poppins text-gray-900;
+  }
+
+  h1,
+  h2 {
+    @apply text-3xl md:text-4xl font-bold
+  }
+
+}
+
+@layer components {
+  .btn,
+  .more-link {
+    @apply text-white py-3 px-10 rounded-xl text-lg hover:bg-blue-900 text-center transition duration-300 inline-block bg-primary;
+  }
+  /**Navegación**/
+  .nav ul li{
+    @apply hover:bg-gray-700 rounded-lg p-2
+  }
+  .nav-desktop ul{
+    display: flex;
+  }
+  .card{
+    @apply bg-white
+  }
+  .card-title {
+    @apply bg-primary text-3xl text-white font-bold py-2 px-4 rounded-t-lg;
+  }
+  .button-whatsapp{
+    @apply fixed bottom-16 right-6 z-50 hover:scale-110 duration-300 ease-in-out
+  }
+}
+
+@layer utilities {
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: white;
+  }
+  .swiper-baner {
+    width: 100%;
+    height: 100%;
+  }
+  .swiper-slide-baner {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .swiper-slide-baner img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .swiper-channels {
+    width: 100vw;
+    height: 100%;
+  }
+  .swiper-slide-channels img{
+    height: 160px;
+  }  
+}
+.paragraph--type--section{
+  @apply overflow-hidden
+}
+.js-form-required .form-required {
+  display: none;
+}
+
+/**Planes**/
+.card-icon {
+  border-color: transparent #0049ed #0049ed transparent;
+  border-radius: 0 0 8px 0;
+  border-style: solid;
+  border-width: 30px;
+  display: inline-block;
+  height: 50px;
+  width: 50px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.bef-links ul {
+  @apply flex flex-wrap gap-1 rounded-lg my-4  
+}
+.bef-links ul li a{
+  @apply inline-block rounded-lg py-3 px-7 duration-100 border border-gray-700 hover:bg-blue-900 hover:text-white
+}
+
+.bef-link--selected {
+  @apply bg-primary rounded-lg text-white border-none py-3 px-7 border-primary border
+} 
+.footer a {
+  @apply hover:underline ease-in-out duration-150
+}
+
+/*formulario*/
+.container-input {
+  display: flex;
+  flex-direction: column;
+}
+.container-input input {
+  border-radius: 0.5rem;
+  width: 100%;
+  color: black;
+  padding: 0.5rem;
+}
+.container-message {
+  display: flex;
+  flex-direction: column;
+}
+.container-message input {
+  border-radius: 0.5rem;
+  height: 6rem;
+  width: 100%;
+  color: black;
+  padding: 0 0 4rem .5rem
+}
+
+
+
+@media (min-width: 768px) {
+  .layout__region.layout__region--second {
+    padding-left: 1rem;
+    padding-top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .swiper-channels {
+    width: 100%;
+    height: 100%;
+   }
+
+  .swiper-channels,
+  .swiper-wrapper-channels {
+    width: 680px;
+  }
+}
+
+/*Pestañas */
+#block-tailwindcss-pestanas{
+  @apply fixed bottom-3 right-3 z-10
+}
+#block-tailwindcss-pestanas ul li {
+  @apply bg-primary px-3 py-2 rounded-lg text-white inline-block ml-3 space-x-4 p-0 m-0 list-none hover:bg-blue-900;
+}
+
+#block-tailwindcss-pestanas .contextual ul li {
+  @apply bg-white text-black px-3;
+}
+#block-tailwindcss-main-menu .contextual .contextual-links{
+  @apply hidden
+}
+#block-tailwindcss-main-menu .contextual button{
+  @apply hidden
+}

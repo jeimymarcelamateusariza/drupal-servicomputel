@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for servicomputel_core module.
+ */
+
+function servicomputel_core_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id)
+{
+  switch ($form_id) {
+    case 'node_landing_page_edit_form':
+      $form['#attached']['library'][] = 'tailwind/global-styling';
+      break;
+    default:
+      # code...
+      break;
+  }
+}
+
+/**
+ * Implements hook_theme()
+ *
+ * Register a theme for each paragraph type
+ *
+ */
+function servicomputel_core_theme($existing, $type, $theme, $path)
+{
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+
+    $theme_templates  = [];
+    $paragraph_types  = servicomputel_core_get_paragraph_types();
+    // Register custom Paragraph bundle templates
+    foreach ($paragraph_types as $paragraph_type) {
+      $theme_templates['paragraph__servicomputel_core__' . $paragraph_type] = [
+        'base hook' => 'paragraph'
+      ];
+    }
+
+    // Register custom Paragraph bundle template fallback
+    $theme_templates['paragraph__servicomputel_core'] = [
+      'base hook' => 'paragraph'
+    ];
+
+    // Register custom Paragraph field wrapper
+    $theme_templates['field__paragraph__servicomputel_core__field_wrapper'] = [
+      'base hook' => 'field',
+    ];
+
+    return $theme_templates;
+  }
+}
+
+/**
+ * Implements HOOK_theme_suggestions_HOOK_alter
+ */
+function servicomputel_core_theme_suggestions_field_alter(array &$suggestions, array $variables, $hook)
+{
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+
+    $field = $variables['element']['#field_name'];
+
+    if ($field == 'field_content_modules') {
+      $suggestions[] = 'field__paragraph__servicomputel_core__field_wrapper';
+    }
+  }
+}
+
+
+/**
+ * Implements HOOK_theme_suggestions_HOOK_alter
+ */
+function servicomputel_core_theme_suggestions_paragraph_alter(&$suggestions, $variables)
+{
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+
+    $entity              = $variables['elements']['#paragraph'];
+    $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+    $type                = $entity->getType();
+    $suggestions[] = 'paragraph__servicomputel_core__' . $type;
+  }
+}
+
+
+/**
+ * Implements hook_theme_registry_alter()
+ */
+function servicomputel_core_theme_registry_alter(&$theme_registry)
+{
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+   
+    $module_path      = \Drupal::service('extension.list.module')->getPath('servicomputel_core');
+    $template_objects = drupal_find_theme_templates($theme_registry, '.html.twig', $module_path);
+    $paragraph_types  = servicomputel_core_get_paragraph_types();
+
+    // 1. Loop through the paragraph types
+    // 2. Check if each paragraph exists in the `$template_objects` array
+    // 3. If it doesn't exist, remove it from the registry so we don't get any errors
+    // 4. If it does exist, set actual path to template
+    foreach ($paragraph_types as $type) {
+      $template = 'paragraph__servicomputel_core__' . $type;
+      if (!isset($template_objects[$template])) {
+        unset($theme_registry['paragraph__servicomputel_core__' . $type]);
+      } else {
+        $theme_registry['paragraph__servicomputel_core__' . $type]['path'] = $template_objects[$template]['path'];
+      }
+    }
+  }
+}
+
+
+/**
+ * Helper function to get a list of paragraph types by machine name
+ *
+ * @return array
+ */
+function servicomputel_core_get_paragraph_types()
+{
+  if (\Drupal::currentUser()->hasPermission('administer site configuration')) {
+    $paragraph_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('paragraph');
+    return array_keys($paragraph_bundles);
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+
+function servicpmputel_core_theme_suggestions_node(array $variables) {
+  $suggestions = [];
+
+  $suggestions[] = 'servicomputel_core';
+
+  return $suggestions;
+}
+
+

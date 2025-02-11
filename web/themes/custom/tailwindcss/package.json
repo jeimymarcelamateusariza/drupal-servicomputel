@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "npx tailwindcss --input src/tailwind.pcss --output dist/tailwind.css --watch",
+    "build": "npx tailwindcss --input src/tailwind.pcss --output dist/tailwind.css --minify"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.4.17"
+  }
+}
